@@ -1,14 +1,2 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>BetterFrame</title>
-  <%= stylesheet_link_tag    "better_frame/application", media: "all" %>
-  <%= javascript_include_tag "better_frame/application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-
+<%= content_tag :div, "", id: "rails-path", "data-path" => request.original_fullpath %>
 <%= yield %>
-
-</body>
-</html>
