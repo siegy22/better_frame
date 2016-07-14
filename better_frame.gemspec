@@ -21,5 +21,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "bundler", "~> 1.10"
   s.add_development_dependency "rake", "~> 11.0"
   s.add_development_dependency "sqlite3", "~> 1.3"
+  s.add_development_dependency "capybara", "~> 2.7"
+  s.add_development_dependency "poltergeist", "~> 1.10"
   s.add_dependency "rails", ">= 4.2", "< 5.1"
 end
