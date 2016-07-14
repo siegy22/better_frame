@@ -1,8 +1,14 @@
 # BetterFrame
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/better_frame`. To experiment with that code, run `bin/console` for an interactive prompt.
+Everyone hates iframes. This is why this rails plugin exists.
 
-TODO: Delete this and the text above, and describe your gem
+You'll get a much smoother usage of your app when embedded.
+Basically what this plugin does is the following:
+
+* Inject your html code onto the foreign website.
+* Handle all events (link clicking, form submitting) with javascript.
+* Write the browser history to make the navigation as normal as possible.
+* Write rails path + parameter onto the foreign site.
 
 ## Installation
 
@@ -16,13 +22,68 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install better_frame
-
 ## Usage
 
-TODO: Write usage instructions here
+### Internal (in your rails app)
+
+**NOTE: you need to make all your forms `remote: true` as this should not
+  redirect to the rails app if you're submitting a form.
+  You also need to link your routes always with the url helper.
+  (`products_path` -> `products_url`)**
+
+To start, you need to mount the engine in your rails routes:
+
+```ruby
+# config/routes.rb
+Rails.application.routes.draw do
+  mount BetterFrame::Engine => "/better_frame"
+
+  ...
+end
+```
+
+As this only works with setting the `Access-Control-Allow-Origin` header, you'll
+need to include a concern to your controllers to make it available for
+better_frame to load. (You also may include it in your ApplicationController if
+you want.)
+
+```ruby
+# app/controllers/examples_controller.rb
+class ExamplesController < ApplicationController
+  include BetterFrameable
+end
+```
+
+### External (on your website which should embed the rails app)
+
+**NOTE: you need to have jQuery on the website which is embedding your rails
+  app**
+
+On your website do the following:
+
+```html
+<div id="app-content" data-baseurl="http://example.com/my_site" data-railsurl="http://my-rails-app.com"></div>
+<script src="http://my-rails-app.com/better_frame" type="text/javascript"></script>
+```
+
+In `<script src="..."` needs the better_frame route to be placed. As defined in
+the routes in your rails application. (See internal usage)
+
+#### IMPORTANT!!
+
+Since this plugin is writing the history of your browser, as long as you stay on the site this
+will work perfectly (when using history back and forward), but if you reload the
+site, you have to make sure that your foreign site stays on the baseurl no
+matter what's after the baseurl.
+
+E.g.
+Visiting http://example.com/my_site loads up your javascript and the root of the
+rails app. Then you click a link of your rails app let's say products, which
+will link to `/products` on your rails app. This will work properly and you'll
+see that the URL has changed to: http://example.com/my_site/products
+Now if you reload your website has to render the http://example.com/my_site
+(baseurl) but without changing the URL. If you set up your website like that you
+can pass in arguments and paths.
 
 ## Development
 
@@ -38,4 +99,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
