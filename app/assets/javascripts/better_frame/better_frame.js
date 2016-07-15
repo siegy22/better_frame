@@ -23,7 +23,7 @@
     fill(event.currentTarget.href).then(storeURLInHistory);
   }
 
-  $(document).on("click", "#app-content a:not([target]='_blank')", handleLinks);
+  $(document).on("click", "#app-content a:not([target=\"_blank\"])", handleLinks);
 
   $(document).on("ajax:success", "#app-content form", function(e, data, status, xhr) {
     fillContent(data);

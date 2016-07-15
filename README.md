@@ -54,6 +54,9 @@ class ExamplesController < ApplicationController
 end
 ```
 
+Side note: If you have `protect_from_forgery with: ...` in your controller you
+have to delete that because of the cross site origin requests.
+
 ### External (on your website which should embed the rails app)
 
 **NOTE: you need to have jQuery on the website which is embedding your rails
