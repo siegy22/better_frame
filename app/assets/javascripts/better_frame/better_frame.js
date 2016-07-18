@@ -10,7 +10,7 @@
   }
 
   function fill(url) {
-    return $.get(url).done(fillContent); }
+    return $.ajax({url: url, type: "GET", xhrFields: { withCredentials: true }}).done(fillContent); }
 
   function fillContent(content) { $("#app-content").html(content); }
 
