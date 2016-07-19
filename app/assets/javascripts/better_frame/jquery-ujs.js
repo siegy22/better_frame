@@ -117,7 +117,7 @@
 
         if (element.is('form')) {
           method = element.data('ujs:submit-button-formmethod') || element.attr('method');
-          url_or_path = element.data('ujs:submit-button-formaction') || element.attr('action');
+          var url_or_path = element.data('ujs:submit-button-formaction') || element.attr('action');
           var expression = /(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/;
           var url_regex = new RegExp(expression);
           var railsURL = $("#app-content").data("railsurl");

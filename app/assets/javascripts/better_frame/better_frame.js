@@ -20,7 +20,7 @@
 
   function handleLinks(event) {
     event.preventDefault();
-    url_or_path = event.currentTarget.getAttribute("href");
+    var url_or_path = event.currentTarget.getAttribute("href");
     var expression = /(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/;
     var url_regex = new RegExp(expression);
     if (!url_or_path.match(url_regex)) {
