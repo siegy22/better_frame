@@ -2,11 +2,11 @@ require 'test_helper'
 
 class IncludeTest < ActionDispatch::IntegrationTest
   test "include & navigate site with better_frame" do
-    visit '/foreign_website'
+
+    visit "/foreign_website"
     wait_for_page_load("products#index")
 
     assert_equal '/', find("#rails-path")["data-path"]
-
     click_on "New Product"
     wait_for_page_load("products#new")
 

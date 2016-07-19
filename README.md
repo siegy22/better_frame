@@ -28,8 +28,6 @@ And then execute:
 
 **NOTE: you need to make all your forms `remote: true` as this should not
   redirect to the rails app if you're submitting a form.
-  You also need to link your routes always with the url helper.
-  (`products_path` -> `products_url`)**
 
 To start, you need to mount the engine in your rails routes:
 
