@@ -52,6 +52,17 @@ class ExamplesController < ApplicationController
 end
 ```
 
+You'll have to set the `Access-Control-Allow-Origin` using the
+`BETTER_FRAME_ORIGIN` environment variable.
+
+     $ export BETTER_FRAME_ORIGIN=http://example.com
+
+Or using [dotenv](https://github.com/bkeepers/dotenv)
+
+```
+BETTER_FRAME_ORIGIN=http://example.com
+```
+
 Side note: If you have `protect_from_forgery with: ...` in your controller you
 have to delete that because of the cross site origin requests.
 
