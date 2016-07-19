@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    better_frame (0.0.5)
+    better_frame (0.1.0)
       rails (>= 4.2, < 5.1)
 
 GEM
