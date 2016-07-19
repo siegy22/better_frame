@@ -8,6 +8,9 @@ require "rails/test_help"
 require 'capybara/rails'
 require 'capybara/poltergeist'
 
+Capybara.server_port = 22222
+ENV["BETTER_FRAME_ORIGIN"] = "http://127.0.0.1:#{Capybara.server_port}"
+
 # Filter out Minitest backtrace while allowing backtrace from other libraries
 # to be shown.
 Minitest.backtrace_filter = Minitest::BacktraceFilter.new

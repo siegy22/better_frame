@@ -1,6 +1,9 @@
 (function($, undefined) {
 
 /**
+ * PATCHED VERSION FOR BETTER_FRAME!!!
+ *
+ *
  * Unobtrusive scripting adapter for jQuery
  * https://github.com/rails/jquery-ujs
  *
@@ -114,7 +117,15 @@
 
         if (element.is('form')) {
           method = element.data('ujs:submit-button-formmethod') || element.attr('method');
-          url = element.data('ujs:submit-button-formaction') || element.attr('action');
+          url_or_path = element.data('ujs:submit-button-formaction') || element.attr('action');
+          var expression = /(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/;
+          var url_regex = new RegExp(expression);
+          var railsURL = $("#app-content").data("railsurl");
+          if (!url_or_path.match(url_regex) && railsURL !== undefined) {
+            url = railsURL + url_or_path;
+          } else {
+            url = url_or_path;
+          }
           data = $(element[0]).serializeArray();
           // memoized value from clicked submit button
           var button = element.data('ujs:submit-button');
