@@ -118,10 +118,9 @@
         if (element.is('form')) {
           method = element.data('ujs:submit-button-formmethod') || element.attr('method');
           var url_or_path = element.data('ujs:submit-button-formaction') || element.attr('action');
-          var expression = /(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/;
-          var url_regex = new RegExp(expression);
           var railsURL = $("#app-content").data("railsurl");
-          if (!url_or_path.match(url_regex) && railsURL !== undefined) {
+          // if url_or_path starts with a slash assume it's a path
+          if (url_or_path.match(/^\//) && railsURL !== undefined) {
             url = railsURL + url_or_path;
           } else {
             url = url_or_path;

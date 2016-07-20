@@ -20,13 +20,15 @@
 
   function handleLinks(event) {
     event.preventDefault();
-    var url_or_path = event.currentTarget.getAttribute("href");
-    var expression = /(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/;
-    var url_regex = new RegExp(expression);
-    if (!url_or_path.match(url_regex)) {
-      url_or_path = railsURL + url_or_path;
+    var url, url_or_path;
+    url_or_path = String(event.currentTarget.getAttribute("href"));
+    // if url_or_path starts with a slash assume it's a path
+    if (url_or_path.match(/^\//)) {
+      url = railsURL + url_or_path;
+    } else {
+      url = url_or_path;
     }
-    fill(url_or_path).then(storeURLInHistory);
+    fill(url).then(storeURLInHistory);
   }
 
   $(document).on("click", "#app-content a:not([target=\"_blank\"])", handleLinks);
