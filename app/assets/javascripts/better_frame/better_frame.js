@@ -10,9 +10,13 @@
   }
 
   function fill(url) {
-    return $.ajax({url: url, type: "GET", xhrFields: { withCredentials: true }}).done(fillContent); }
+    return $.ajax({url: url, type: "GET", xhrFields: { withCredentials: true }})
+            .done(fillContent)
+            .then(fireLoadedEvent); }
 
   function fillContent(content) { $("#app-content").html(content); }
+
+  function fireLoadedEvent() { $("#app-content").trigger("better_frame:load"); }
 
   function storeURLInHistory() {
     window.history.pushState(null, null, baseURL + currentRailsPath());

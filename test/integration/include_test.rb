@@ -6,6 +6,9 @@ class IncludeTest < ActionDispatch::IntegrationTest
     visit "/foreign_website"
     wait_for_page_load("products#index")
 
+    # run custom javascripts!
+    assert_equal "test", find("#products-table")["class"]
+
     assert_equal '/', find("#rails-path")["data-path"]
     click_on "New Product"
     wait_for_page_load("products#new")

@@ -66,6 +66,20 @@ BETTER_FRAME_ORIGIN=http://example.com
 Side note: If you have `protect_from_forgery with: ...` in your controller you
 have to delete that because of the cross site origin requests.
 
+#### Javascript:
+
+If you need something like `$(document).ready`, better_frame fires an event with
+`better_frame:load`.
+This event is fired everytime the side is loaded with better_frame.
+
+Usage:
+
+```javascript
+$("#app-content").on("better_frame:load", function(){
+    alert("site was loaded with better_frame!");
+});
+```
+
 ### External (on your website which should embed the rails app)
 
 **NOTE: you need to have jQuery on the website which is embedding your rails
