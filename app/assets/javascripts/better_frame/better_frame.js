@@ -35,7 +35,7 @@
     fill(url).then(storeURLInHistory);
   }
 
-  $(document).on("click", "#app-content a:not([target=\"_blank\"]):not[data-ignore-better-frame]", handleLinks);
+  $(document).on("click", "#app-content a:not([target=\"_blank\"]):not([data-ignore-better-frame])", handleLinks);
 
   $(document).on("ajax:success", "#app-content form", function(e, data, status, xhr) {
     fillContent(data);
