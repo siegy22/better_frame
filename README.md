@@ -80,6 +80,16 @@ $("#app-content").on("better_frame:load", function(){
 });
 ```
 
+### HTML
+
+By default, `better_frame` will override all anchor tags, except the ones with `target=_blank`.
+If you want to skip some specific links from being catched by better_frame you can use
+the `data-ignore-better-frame` attribute (e.g. mailto: links):
+
+```html
+<a href="mailto:user@example.com" data-ignore-better-frame>mail example user</a>"
+```
+
 ### External (on your website which should embed the rails app)
 
 **NOTE: you need to have jQuery on the website which is embedding your rails
