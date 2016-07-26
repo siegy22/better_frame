@@ -99,7 +99,7 @@
 
     // Default way to get an element's href. May be overridden at $.rails.href.
     href: function(element) {
-      return element[0].href;
+      return element[0].getAttribute("href");
     },
 
     // Checks "data-remote" if true to handle the request through a XHR request.
@@ -117,14 +117,7 @@
 
         if (element.is('form')) {
           method = element.data('ujs:submit-button-formmethod') || element.attr('method');
-          var url_or_path = element.data('ujs:submit-button-formaction') || element.attr('action');
-          var railsURL = $("#app-content").data("railsurl");
-          // if url_or_path starts with a slash assume it's a path
-          if (url_or_path.match(/^\//) && railsURL !== undefined) {
-            url = railsURL + url_or_path;
-          } else {
-            url = url_or_path;
-          }
+          url = element.data('ujs:submit-button-formaction') || element.attr('action');
           data = $(element[0]).serializeArray();
           // memoized value from clicked submit button
           var button = element.data('ujs:submit-button');
@@ -148,6 +141,13 @@
           method = element.data('method');
           url = rails.href(element);
           data = element.data('params') || null;
+        }
+        var railsURL = $("#app-content").data("railsurl");
+        // if url starts with a slash assume it's a path
+        if (url.match(/^\//) && railsURL !== undefined) {
+          url = railsURL + url;
+        } else {
+          url = url;
         }
 
         options = {
@@ -229,12 +229,13 @@
     // <a href="/users/5" data-method="delete" rel="nofollow" data-confirm="Are you sure?">Delete</a>
     handleMethod: function(link) {
       var href = rails.href(link),
-        method = link.data('method'),
-        target = link.attr('target'),
-        csrfToken = rails.csrfToken(),
-        csrfParam = rails.csrfParam(),
-        form = $('<form method="post" action="' + href + '"></form>'),
-        metadataInput = '<input name="_method" value="' + method + '" type="hidden" />';
+          method = link.data('method'),
+          target = link.attr('target'),
+          csrfToken = rails.csrfToken(),
+          csrfParam = rails.csrfParam(),
+          remote = rails.isRemote(link),
+          form = $('<form method="post" action="' + href + '" data-with-credentials="true" data-remote="true"></form>'),
+          metadataInput = '<input name="_method" value="' + method + '" type="hidden" />';
 
       if (csrfParam !== undefined && csrfToken !== undefined && !rails.isCrossDomain(href)) {
         metadataInput += '<input name="' + csrfParam + '" value="' + csrfToken + '" type="hidden" />';
@@ -242,7 +243,7 @@
 
       if (target) { form.attr('target', target); }
 
-      form.hide().append(metadataInput).appendTo('body');
+      form.hide().append(metadataInput).appendTo('#app-content');
       form.submit();
     },
 
