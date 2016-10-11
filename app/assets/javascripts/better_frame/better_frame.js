@@ -10,7 +10,7 @@
   }
 
   function fill(url) {
-    return $.ajax({url: url, type: "GET", xhrFields: { withCredentials: true }})
+    return $.ajax({url: url, type: "GET"})
             .done(fillContent)
             .then(fireLoadedEvent); }
 
@@ -24,14 +24,7 @@
 
   function handleLinks(event) {
     event.preventDefault();
-    var url, url_or_path;
-    url_or_path = String(event.currentTarget.getAttribute("href"));
-    // if url_or_path starts with a slash assume it's a path
-    if (url_or_path.match(/^\//)) {
-      url = railsURL + url_or_path;
-    } else {
-      url = url_or_path;
-    }
+    var url = event.currentTarget.getAttribute("href");
     fill(url).then(storeURLInHistory);
   }
 

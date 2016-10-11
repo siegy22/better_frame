@@ -142,14 +142,6 @@
           url = rails.href(element);
           data = element.data('params') || null;
         }
-        var railsURL = $("#app-content").data("railsurl");
-        // if url starts with a slash assume it's a path
-        if (url.match(/^\//) && railsURL !== undefined) {
-          url = railsURL + url;
-        } else {
-          url = url;
-        }
-
         options = {
           type: method || 'GET', data: data, dataType: dataType,
           // stopping the "ajax:beforeSend" event will cancel the ajax request
